@@ -8,7 +8,9 @@ if (!container) {
 }
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color("#111827");
+const fogColor = new THREE.Color("#111827");
+scene.background = fogColor;
+scene.fog = new THREE.Fog(fogColor, 8, 40);
 
 const camera = new THREE.PerspectiveCamera(
   50,
@@ -29,6 +31,14 @@ scene.add(new THREE.AmbientLight(0xffffff, 1.5));
 const keyLight = new THREE.DirectionalLight(0xffffff, 3);
 keyLight.position.set(4, 5, 3);
 scene.add(keyLight);
+
+const ground = new THREE.Mesh(
+  new THREE.PlaneGeometry(200, 200),
+  new THREE.MeshStandardMaterial({ color: "#166534", roughness: 1 }),
+);
+ground.rotation.x = -Math.PI / 2;
+ground.position.y = -1.3;
+scene.add(ground);
 
 const cube = new THREE.Mesh(
   new THREE.BoxGeometry(1.5, 1.5, 1.5),
